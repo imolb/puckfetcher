@@ -14,7 +14,7 @@ matrix:
     - python: "3.8"
       dist: xenial
       env: "VERSION=3.8"
-    - python: "3.0"
+    - python: "3.9"
       dist: xenial
       env: "VERSION=3.9"
     - python: "nightly"
