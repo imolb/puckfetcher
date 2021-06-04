@@ -1,3 +1,17 @@
+1.4.2 (2021-06-04):
+    * BUGFIX
+        * Wrap audiofile.tag.save specifically in another try catch to catch an error saving.
+        v2.2 ID3 tags, which the library apparently doesn't support.
+        * I will continue catching cases like this one by one as they come up,
+        rather than use a catch-all,
+        because I would like to preserve, somewhat, the cases I need to eventually fix.
+        * No ETA on fixes, I don't have enough time to get to everything I'd like to work on.
+
+1.4.1 (2021-05-31):
+    * BUGFIX
+        * Wrap process_tags with a try-except to catch something wrong with the tag setting.
+        * Needs more thorough look but don't feel like it right now.
+
 1.4.0 (2021-03-25):
     * DEV
         * Replace Stagger library with eyeD3. eyeD3 is more actively maintained.

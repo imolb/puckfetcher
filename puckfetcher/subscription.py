@@ -657,64 +657,80 @@ class Subscription(object):
         # Process tags. If set to set_tags and tags are empty, write tags.
         # Pull tags into sub metadata if it's not set.
         # Pull tags into entry unless they're empty, and then try sub.
-        LOG.info(f"Artist tag is '{audiofile.tag.artist}'.")
-        if audiofile.tag.artist == "" and self.settings["set_tags"]:
-            LOG.info(f"Setting artist tag to '{self.metadata['artist']}'.")
-            audiofile.tag.artist = self.metadata["artist"]
 
-        if self.metadata["artist"] == "":
-            self.metadata["artist"] = audiofile.tag.artist
+        # TODO do this cleaner, but we shouldn't crash out if tags can't be set.
+        try:
+            LOG.info(f"Artist tag is '{audiofile.tag.artist}'.")
+            if audiofile.tag.artist == "" and self.settings["set_tags"]:
+                LOG.info(f"Setting artist tag to '{self.metadata['artist']}'.")
+                audiofile.tag.artist = self.metadata["artist"]
 
-        if audiofile.tag.artist != "":
-            entry["metadata"]["artist"] = audiofile.tag.artist
-        else:
-            entry["metadata"]["artist"] = self.metadata["artist"]
+            if self.metadata["artist"] == "":
+                self.metadata["artist"] = audiofile.tag.artist
 
-        LOG.info(f"Album tag is '{audiofile.tag.album}'.")
-        if audiofile.tag.album == "":
-            LOG.info(f"Setting album tag to '{self.metadata['album']}'.")
-            audiofile.tag.album = self.metadata["album"]
+            if audiofile.tag.artist != "":
+                entry["metadata"]["artist"] = audiofile.tag.artist
+            else:
+                entry["metadata"]["artist"] = self.metadata["artist"]
 
-        if self.metadata["album"] == "":
-            self.metadata["album"] = audiofile.tag.album
+            LOG.info(f"Album tag is '{audiofile.tag.album}'.")
+            if audiofile.tag.album == "":
+                LOG.info(f"Setting album tag to '{self.metadata['album']}'.")
+                audiofile.tag.album = self.metadata["album"]
 
-        if audiofile.tag.album != "":
-            entry["metadata"]["album"] = audiofile.tag.album
-        else:
-            entry["metadata"]["album"] = self.metadata["album"]
+            if self.metadata["album"] == "":
+                self.metadata["album"] = audiofile.tag.album
 
-        LOG.info(f"Album Artist tag is '{audiofile.tag.album_artist}'.")
-        if audiofile.tag.album_artist == "":
-            LOG.info(f"Setting album_artist tag to '{self.metadata['album_artist']}'.")
-            audiofile.tag.album_artist = self.metadata["album_artist"]
+            if audiofile.tag.album != "":
+                entry["metadata"]["album"] = audiofile.tag.album
+            else:
+                entry["metadata"]["album"] = self.metadata["album"]
 
-        if self.metadata["album_artist"] == "":
-            self.metadata["album_artist"] = audiofile.tag.album_artist
+            LOG.info(f"Album Artist tag is '{audiofile.tag.album_artist}'.")
+            if audiofile.tag.album_artist == "":
+                LOG.info(f"Setting album_artist tag to '{self.metadata['album_artist']}'.")
+                audiofile.tag.album_artist = self.metadata["album_artist"]
 
-        if audiofile.tag.album_artist != "":
-            entry["metadata"]["album_artist"] = audiofile.tag.album_artist
-        else:
-            entry["metadata"]["album_artist"] = self.metadata["album_artist"]
+            if self.metadata["album_artist"] == "":
+                self.metadata["album_artist"] = audiofile.tag.album_artist
 
-        LOG.info(f"Title tag is '{audiofile.tag.title}'.")
-        LOG.info(f"Overwrite setting is set to '{self.settings['overwrite_title']}'.")
-        if audiofile.tag.title == "" or self.settings["overwrite_title"]:
-            LOG.info(f"Setting title tag to '{entry['title']}'.")
-            audiofile.tag.title = entry["title"]
+            if audiofile.tag.album_artist != "":
+                entry["metadata"]["album_artist"] = audiofile.tag.album_artist
+            else:
+                entry["metadata"]["album_artist"] = self.metadata["album_artist"]
 
-        # Store some extra tags on the entry. Doesn't matter if they're empty, they're empty on the
-        # entry too.
+            LOG.info(f"Title tag is '{audiofile.tag.title}'.")
+            LOG.info(f"Overwrite setting is set to '{self.settings['overwrite_title']}'.")
+            if audiofile.tag.title == "" or self.settings["overwrite_title"]:
+                LOG.info(f"Setting title tag to '{entry['title']}'.")
+                audiofile.tag.title = entry["title"]
 
-        # If the genre tag is not set, default it to the Podcast genre. Genre id list can be found at:
-        # https://eyed3.readthedocs.io/en/latest/plugins/genres_plugin.html?highlight=genre
-        if audiofile.tag.genre is None:
-            audiofile.tag.genre = Genre(id=186)
+            # Store some extra tags on the entry.
+            # Doesn't matter if they're empty, they're empty on the # entry too.
 
-        entry["metadata"]["genre"] = audiofile.tag.genre.name
+            # If the genre tag is not set,
+            # default it to the Podcast genre.
+            # Genre id list can be found at:
+            # https://eyed3.readthedocs.io/en/latest/plugins/genres_plugin.html?highlight=genre
+            if audiofile.tag.genre is None:
+                audiofile.tag.genre = Genre(id=186)
 
-        entry["metadata"]["date"] = str(audiofile.tag.getBestDate(prefer_recording_date=True))
+            entry["metadata"]["genre"] = audiofile.tag.genre.name
 
-        audiofile.tag.save()
+            entry["metadata"]["date"] = str(audiofile.tag.getBestDate(prefer_recording_date=True))
+
+            # TODO this is catching "Unable to write ID3 v2.2" error.
+            # should be able to do more gracefully.
+            try:
+                audiofile.tag.save()
+            except NotImplementedError as ef:
+                LOG.warning(f"Caught NotImplementedError {ef}. Skipping tag setting.")
+                return
+
+        # TODO this is catching tag not being present at all, I think, which should be fixable.
+        except AttributeError as e:
+            LOG.warning(f"Caught AttributeError {e}. Skipping tag setting.")
+            return
 
     def as_config_yaml(self) -> Mapping[str, Any]:
         """
