@@ -3,8 +3,6 @@ puckfetcher
 
 | |BSD3 License|
 
-| |Build Status|
-
 | |Coverage Status|
 
 | |Issue Count|
@@ -64,8 +62,6 @@ Ideas for Future Releases
 
 .. |BSD3 License| image:: http://img.shields.io/badge/license-BSD3-brightgreen.svg
    :target: https://tldrlegal.com/license/bsd-3-clause-license-%28revised%29
-.. |Build Status| image:: https://travis-ci.org/alixnovosi/puckfetcher.svg?branch=master
-   :target: https://travis-ci.org/alixnovosi/puckfetcher
 .. |Coverage Status| image:: https://coveralls.io/repos/alixnovosi/puckfetcher/badge.svg?branch=master&service=github
    :target: https://coveralls.io/github/alixnovosi/puckfetcher?branch=master
 .. |Issue Count| image:: https://codeclimate.com/github/alixnovosi/puckfetcher/badges/issue_count.svg
