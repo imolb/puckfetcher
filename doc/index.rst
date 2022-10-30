@@ -39,13 +39,13 @@ Puckfetcher is available on pypi, and requires Python 3.6+.
 Contribute
 ----------
 
-- Issue Tracker: https://github.com/alixnovosi/puckfetcher/
-- Source Code: https://github.com/alixnovosi/puckfetcher/issues
+- Issue Tracker: https://github.com/lunemercove/puckfetcher/
+- Source Code: https://github.com/lunemercove/puckfetcher/issues
 
 Support
 -------
 
-File an issue at the GitHub project, or reach out to dev at mail.andrewmichaud.com.
+File an issue at the GitHub project, or reach out to puckfetcher at lune dot gay.
 
 License
 -------

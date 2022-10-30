@@ -10,27 +10,27 @@ with open(path.join(HERE, "README.rst")) as f:
 with open(path.join(HERE, "VERSION")) as f:
     VERSION = f.read().strip()
 
-URL = "https://github.com/alixnovosi/puckfetcher"
+URL = "https://github.com/lunemercove/puckfetcher"
 
 INSTALL_REQUIRES = [
     "appdirs>=1.4.4, <2.0.0",
     "clint>=0.5.1, <0.6.0",
-    "feedparser>=6.0.2, <7.0.0",
-    "pyyaml>=5.3.1, <6.0.0",
-    "python-magic>=0.4.18, <0.5.0",
-    "requests>=2.25.1, <3.0.0",
+    "feedparser>=6.0.10, <7.0.0",
+    "pyyaml>=6.0, <7.0.0",
+    "python-magic>=0.4.27, <0.5.0",
+    "requests>=2.28.1, <3.0.0",
     "u-msgpack-python>=2.7.1, <3.0.0",
-    "eyed3>=0.9.6, <1.0.0",
-    "drewtilities>=1.3.2, <2.0.0",
+    "eyed3>=0.9.7, <1.0.0",
+    "bottilities>=1.4.0, <2.0.0",
 ]
 
 TEST_REQUIRES = [
-    "coveralls>=3.0.0, <4.0.0",
-    "pytest>=6.2.1, <7.0.0",
+    "coveralls>=3.3.1, <4.0.0",
+    "pytest>=7.2.0, <8.0.0",
 ]
 
-setup(author="Andrew Michaud",
-      author_email="puckfetcher@mail.andrewmichaud.com",
+setup(author="Luné Mercové",
+      author_email="puckfetcher@lune.gay",
 
       classifiers=["Development Status :: 5 - Production/Stable",
                    "Environment :: Console",

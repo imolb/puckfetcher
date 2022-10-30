@@ -50,8 +50,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'puckfetcher'
-copyright = '2017, Andrew Michaud'
-author = 'Andrew Michaud'
+copyright = '2022, Luné Mercové'
+author = 'Luné Mercové'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -143,7 +143,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'puckfetcher.tex', 'puckfetcher Documentation',
-     'Andrew Michaud', 'manual'),
+     'Luné Mercové', 'manual'),
 ]
 
 

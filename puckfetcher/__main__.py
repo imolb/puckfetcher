@@ -5,7 +5,7 @@ import sys
 from logging import Logger
 from typing import Any, Dict, List, Tuple
 
-import drewtilities as util
+import bottilities as util
 from clint.textui import prompt
 
 import puckfetcher.constants as constants

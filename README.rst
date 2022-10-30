@@ -1,22 +1,9 @@
 puckfetcher
 ===========
 
-| |BSD3 License|
-
-| |Coverage Status|
-
-| |Issue Count|
-
-.. image:: https://badge.fury.io/py/puckfetcher.svg
-    :target: https://badge.fury.io/py/puckfetcher
-
-.. image:: https://badge.waffle.io/alixnovosi/puckfetcher.png?label=ready&title=Ready
-    :target: https://waffle.io/alixnovosi/puckfetcher
-    :alt: 'Stories in Ready'
-
 A simple command-line podcatcher.
 
-GitHub Project: (https://github.com/alixnovosi/puckfetcher)
+GitHub Project: (https://github.com/lunemercove/puckfetcher)
 
 Supports Python 3.6+. Please report any issues on the GitHub project or reach out over email.
 
@@ -59,10 +46,3 @@ Ideas for Future Releases
 -  Text-based progress for other time-consuming actions.
 -  Support PyPy (when it supports 3.6+).
 -  Allow parallel downloading.
-
-.. |BSD3 License| image:: http://img.shields.io/badge/license-BSD3-brightgreen.svg
-   :target: https://tldrlegal.com/license/bsd-3-clause-license-%28revised%29
-.. |Coverage Status| image:: https://coveralls.io/repos/alixnovosi/puckfetcher/badge.svg?branch=master&service=github
-   :target: https://coveralls.io/github/alixnovosi/puckfetcher?branch=master
-.. |Issue Count| image:: https://codeclimate.com/github/alixnovosi/puckfetcher/badges/issue_count.svg
-   :target: https://codeclimate.com/github/alixnovosi/puckfetcher
