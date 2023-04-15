@@ -325,7 +325,7 @@ class Subscription(object):
                         dest = self._get_dest(url=url, title=entry["title"], directory=directory)
                         self.downloader(url=url, dest=dest)
 
-                        self.check_tag_edit_safe(dest, entry)
+                        self.check_tag_edit_safe(dest, entry, one_indexed_entry_num)
 
                     if one_indexed_entry_num > self.feed_state.latest_entry_number:
                         self.feed_state.latest_entry_number = one_indexed_entry_num
@@ -606,7 +606,7 @@ class Subscription(object):
         """
         return [f"{item['name']} (#{item['number']})" for item in self.feed_state.summary_queue]
 
-    def check_tag_edit_safe(self, dest: str, entry: Mapping[str, Any]) -> None:
+    def check_tag_edit_safe(self, dest: str, entry: Mapping[str, Any], track: int) -> None:
         """
         Check if we can safely edit ID3v2 tags.
         Will do nothing if this is not an MP3 file.
@@ -641,9 +641,9 @@ class Subscription(object):
             return
 
         LOG.info(f"Editing tags for {dest}.")
-        self.process_tags(dest, entry)
+        self.process_tags(dest, entry, track)
 
-    def process_tags(self, dest: str, entry: Mapping[str, Any]) -> None:
+    def process_tags(self, dest: str, entry: Mapping[str, Any], track: int) -> None:
         """
         Set ID3v2 tags on downloaded MP3 file.
 
@@ -726,6 +726,9 @@ class Subscription(object):
                                     entry['published_parsed'].tm_mday))
 
             entry["metadata"]["date"] = str(audiofile.tag.getBestDate(prefer_recording_date=True))
+
+            # entry number as track number
+            audiofile.tag.track_num = track
 
             # TODO this is catching "Unable to write ID3 v2.2" error.
             # should be able to do more gracefully.
