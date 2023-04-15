@@ -716,8 +716,7 @@ class Subscription(object):
             # default it to the Podcast genre.
             # Genre id list can be found at:
             # https://eyed3.readthedocs.io/en/latest/plugins/genres_plugin.html?highlight=genre
-            if audiofile.tag.genre is None:
-                audiofile.tag.genre = Genre(id=186)
+            audiofile.tag.genre = Genre(id=186)
 
             entry["metadata"]["genre"] = audiofile.tag.genre.name
 
