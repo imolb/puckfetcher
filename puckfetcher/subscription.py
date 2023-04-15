@@ -710,6 +710,12 @@ class Subscription(object):
                 LOG.info(f"Setting title tag to '{entry['title']}'.")
                 audiofile.tag.title = entry["title"]
 
+            # Set album cover
+            if len(audiofile.tag.images) == 0 and entry["imageurl"] != "":
+                response = urllib.request.urlopen(entry["imageurl"])
+                audiofile.tag.images.set(eyed3.id3.frames.ImageFrame.FRONT_COVER,
+                                         response.read(), response.info().get_content_type())
+
             # Store some extra tags on the entry.
             # Doesn't matter if they're empty, they're empty on the # entry too.
 
