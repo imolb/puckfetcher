@@ -712,8 +712,7 @@ class Subscription(object):
             # Store some extra tags on the entry.
             # Doesn't matter if they're empty, they're empty on the # entry too.
 
-            # If the genre tag is not set,
-            # default it to the Podcast genre.
+            # Overwrite the genre tag to ensure same tag
             # Genre id list can be found at:
             # https://eyed3.readthedocs.io/en/latest/plugins/genres_plugin.html?highlight=genre
             audiofile.tag.genre = Genre(id=186)
