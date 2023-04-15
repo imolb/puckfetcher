@@ -9,6 +9,7 @@ import logging
 import os
 import platform
 import time
+import urllib.request
 from typing import Any, Dict, List, Mapping, Optional, Tuple, MutableSequence
 
 import bottilities as util
@@ -961,6 +962,23 @@ class _FeedState(object):
             new_entry["metadata"] = {}
             for enclosure in entry["enclosures"]:
                 new_entry["urls"].append(enclosure["href"])
+
+            if "image" in entry and "href" in entry["image"]:
+                new_entry["imageurl"] = entry["image"]["href"]
+            elif "image" in parsed.feed and "href" in parsed.feed["image"]:
+                new_entry["imageurl"] = parsed.feed["image"]["href"]
+
+            if "title" in parsed.feed:
+                new_entry["album"] = parsed.feed["title"]
+
+            if "author" in parsed.feed:
+                new_entry["album_artist"] = parsed.feed["author"]
+
+            if "author" in entry:
+                new_entry["author"] = entry["author"]
+
+            if "published_parsed" in entry:
+                new_entry["published_parsed"] = entry["published_parsed"]
 
             self.entries.append(new_entry)
 
