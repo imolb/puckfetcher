@@ -692,17 +692,23 @@ class Subscription(object):
                 entry["metadata"]["album"] = self.metadata["album"]
 
             LOG.info(f"Album Artist tag is '{audiofile.tag.album_artist}'.")
-            if audiofile.tag.album_artist == "":
-                LOG.info(f"Setting album_artist tag to '{self.metadata['album_artist']}'.")
-                audiofile.tag.album_artist = self.metadata["album_artist"]
-
-            if self.metadata["album_artist"] == "":
-                self.metadata["album_artist"] = audiofile.tag.album_artist
-
-            if audiofile.tag.album_artist != "":
-                entry["metadata"]["album_artist"] = audiofile.tag.album_artist
+            # Set value of album_artist based on feed attribute (if exists)
+            # to ensure same value for all mp3 files
+            if entry["album_artist"] != "":
+                audiofile.tag.album_artist = entry["album_artist"]
+                self.metadata["album_artist"] = entry["album_artist"]
             else:
-                entry["metadata"]["album_artist"] = self.metadata["album_artist"]
+                if audiofile.tag.album_artist == "":
+                    LOG.info(f"Setting album_artist tag to '{self.metadata['album_artist']}'.")
+                    audiofile.tag.album_artist = self.metadata["album_artist"]
+
+                if self.metadata["album_artist"] == "":
+                    self.metadata["album_artist"] = audiofile.tag.album_artist
+
+                if audiofile.tag.album_artist != "":
+                    entry["metadata"]["album_artist"] = audiofile.tag.album_artist
+                else:
+                    entry["metadata"]["album_artist"] = self.metadata["album_artist"]
 
             LOG.info(f"Title tag is '{audiofile.tag.title}'.")
             LOG.info(f"Overwrite setting is set to '{self.settings['overwrite_title']}'.")
