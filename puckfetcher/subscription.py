@@ -192,7 +192,7 @@ class Subscription(object):
                                                              defaults["use_title_as_filename"])
         sub.settings["backlog_limit"] = sub_yaml.get("backlog_limit", defaults["backlog_limit"])
         sub.settings["set_tags"] = sub_yaml.get("set_tags", defaults["set_tags"])
-        sub.settings["overwrite_title"] = sub_yaml.get("overwrite_title", False)
+        sub.settings["overwrite_title"] = sub_yaml.get("overwrite_title", defaults["overwrite_title"])
 
         sub.metadata["name"] = name
         sub.metadata["artist"] = sub_yaml.get("artist", "")

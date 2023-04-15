@@ -36,6 +36,7 @@ class Config(object):
             "backlog_limit": 1,
             "use_title_as_filename": False,
             "set_tags": False,
+            "overwrite_title": False,
         }
 
         self.state_loaded = False
