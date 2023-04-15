@@ -726,10 +726,13 @@ class Subscription(object):
             # TODO this is catching "Unable to write ID3 v2.2" error.
             # should be able to do more gracefully.
             try:
-                audiofile.tag.save()
+                audiofile.tag.save(encoding='utf-8', version=eyed3.id3.ID3_V2_4)
             except NotImplementedError as ef:
                 LOG.warning(f"Caught NotImplementedError {ef}. Skipping tag setting.")
                 return
+
+            # Remove IDV1 tag if existing
+            eyed3.id3.tag.Tag.remove(dest, eyed3.id3.ID3_V1)
 
         # TODO this is catching tag not being present at all, I think, which should be fixable.
         except AttributeError as e:
