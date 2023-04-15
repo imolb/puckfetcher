@@ -720,6 +720,12 @@ class Subscription(object):
 
             entry["metadata"]["genre"] = audiofile.tag.genre.name
 
+            if entry['published_parsed']:
+                audiofile.tag._setOriginalReleaseDate(
+                    eyed3.core.Date(entry['published_parsed'].tm_year,
+                                    entry['published_parsed'].tm_mon,
+                                    entry['published_parsed'].tm_mday))
+
             entry["metadata"]["date"] = str(audiofile.tag.getBestDate(prefer_recording_date=True))
 
             # TODO this is catching "Unable to write ID3 v2.2" error.
