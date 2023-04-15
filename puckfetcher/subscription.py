@@ -660,6 +660,10 @@ class Subscription(object):
 
         # TODO do this cleaner, but we shouldn't crash out if tags can't be set.
         try:
+            if audiofile.tag is None:
+                # create new empty tag
+                audiofile.initTag()
+
             LOG.info(f"Artist tag is '{audiofile.tag.artist}'.")
             if audiofile.tag.artist == "" and self.settings["set_tags"]:
                 LOG.info(f"Setting artist tag to '{self.metadata['artist']}'.")
