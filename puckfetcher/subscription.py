@@ -679,17 +679,23 @@ class Subscription(object):
                 entry["metadata"]["artist"] = self.metadata["artist"]
 
             LOG.info(f"Album tag is '{audiofile.tag.album}'.")
-            if audiofile.tag.album == "":
-                LOG.info(f"Setting album tag to '{self.metadata['album']}'.")
-                audiofile.tag.album = self.metadata["album"]
-
-            if self.metadata["album"] == "":
-                self.metadata["album"] = audiofile.tag.album
-
-            if audiofile.tag.album != "":
-                entry["metadata"]["album"] = audiofile.tag.album
+            # Set value of album based on feed attribute (if exists)
+            # to ensure same value for all mp3 files
+            if entry["album"] != "":
+                audiofile.tag.album = entry["album"]
+                self.metadata["album"] = entry["album"]
             else:
-                entry["metadata"]["album"] = self.metadata["album"]
+                if audiofile.tag.album == "":
+                    LOG.info(f"Setting album tag to '{self.metadata['album']}'.")
+                    audiofile.tag.album = self.metadata["album"]
+
+                if self.metadata["album"] == "":
+                    self.metadata["album"] = audiofile.tag.album
+
+                if audiofile.tag.album != "":
+                    entry["metadata"]["album"] = audiofile.tag.album
+                else:
+                    entry["metadata"]["album"] = self.metadata["album"]
 
             LOG.info(f"Album Artist tag is '{audiofile.tag.album_artist}'.")
             # Set value of album_artist based on feed attribute (if exists)
